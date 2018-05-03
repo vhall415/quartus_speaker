@@ -41,11 +41,13 @@ module xlr8_speaker  // NOTE: Change the module name to match your design
     input [7:0]  dbus_in, //   Data Bus Input
     output [7:0] dbus_out, //  Data Bus Output
     output       io_out_en, // IO Output Enable
+    output       spk1_out,
+    output       spk2_out,
     // DM
     input [7:0]  ramadr, //    RAM Address
     input        ramre, //     RAM Read Enable
     input        ramwe, //     RAM Write Enable
-    input        dm_sel, //    DM Select
+    input        dm_sel //    DM Select
     );
    
    //======================================================================
@@ -125,6 +127,9 @@ module xlr8_speaker  // NOTE: Change the module name to match your design
    // Below is an example instantiation of a simple user module. It
    // provides just enough I/O to demonstrate how the above logic is
    // connected.
+   
+   assign spk1_out = data_reg[0];
+   assign spk2_out = data_reg[1];
    
    Alorium_speaker speak_inst (// Clock and Reset
                     .clk         (clk),

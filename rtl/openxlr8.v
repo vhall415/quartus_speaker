@@ -172,10 +172,11 @@ module openxlr8
    // with a single XB, you'll need at least something like this:
 	
 	
-		logic	spk_out_en;
-		logic	spk1_pin_en;
-		logic	spk2_pin_en;
-   
+	logic [7:0] spk_dbusout;
+    logic	spk1_out;
+    logic   spk2_out;
+    logic   spk_out_en;
+  
    // logic [7:0]		xb1_dbusout;
    // logic 			xb1_out_en;
    //----------------------------------------------------------------------
@@ -213,15 +214,30 @@ module openxlr8
    //    );
    
 	
-	Alorium_speaker spk_inst
-		(
-		// assign inputs
-		.clk(clk),		//assume clock speed is 32 Mhz; 3.125*10^-8 = 31.25ns
-		.spk_on(spk_out_en), //determines when speaker is on
-		
-		.spk1_pin(spk1_pin_en), //speaker signal which goes into a DAC
-		.spk2_pin(spk2_pin_en)	
-		);
+	xlr8_speaker
+        #(
+          .SPEAKER_CTRL_ADDR(SPEAKER_CTRL_Address),
+          .SPEAKER_DATA_ADDR(SPEAKER_CTRL_Address),
+          .WIDTH(8)
+          )
+     spk_inst
+	    (// Clock and Reset
+		 .clk(clk_32mhz),		//assume clock speed is 32 Mhz; 3.125*10^-8 = 31.25ns
+		 .rstn(rstn),
+         .clken(1'b1),
+         // input
+         .dbus_in(dbus_in),
+		 // output
+         .dbus_out(spk_dbusout),
+         .io_out_en(spk_out_en),
+         .spk1_out(spk1_out),
+         .spk2_out(spk2_out),
+         // dm
+         .ramadr(ramadr[7:0]),
+         .ramre(ramre),
+         .ramwe(ramwe),
+         .dm_sel(dm_sel)
+		 );
 		
 
    // Set pin control bits for the above XB. If no XBs are being
@@ -261,21 +277,21 @@ module openxlr8
    
    // On XLR8/UNO, bus is [19:0]={portc[5:0],portb[5:0],portd[7:0]}
 	// input 2  output 5,6    free pins= 3,7
-   assign xbs_ddoe[0][2] = 1'b1;
+    assign xbs_ddoe[0][2] = 1'b1;
 	assign xbs_ddoe[0][5] = 1'b1;
 	assign xbs_ddoe[0][6] = 1'b1;
 	
-	assign xbs_ddov[0][2] = 1'b0; //0 stands for input
-   assign xbs_ddov[0][5] = 1'b1;	//1 stands for output
-	assign xbs_ddov[0][6] = 1'b1;
+	assign xbs_ddov[0][2] = 1'b0;   //0 stands for input (spk_on)
+    assign xbs_ddov[0][5] = 1'b1;	//1 stands for output (spk1_out)
+	assign xbs_ddov[0][6] = 1'b1;   // spk2_out
 	
-   assign xbs_pvoe[0][2] = 1'b0; //changing from 0 to 1 because I have to connect pin to variable
+    assign xbs_pvoe[0][2] = 1'b0; //changing from 0 to 1 because I have to connect pin to variable
 	assign xbs_pvoe[0][5] = 1'b1; //determines if overides output values
 	assign xbs_pvoe[0][6] = 1'b1;
 	
-   assign xbs_pvov[0][2] = 1'b0;
-	assign xbs_pvov[0][5] = spk1_pin_en; //output value if overridden
-	assign xbs_pvov[0][6] = spk2_pin_en;
+    assign xbs_pvov[0][2] = 1'b0;
+	assign xbs_pvov[0][5] = spk1_out; //output value if overridden
+	assign xbs_pvov[0][6] = spk2_out;
 
    // End of XB instantiation
    //----------------------------------------------------------------------
@@ -335,9 +351,8 @@ module openxlr8
    // this:
 	//   assign dbus_out = 8'h00;
 	//   assign io_out_en = 1'h0;
-		assign spk1_pin = spk_out_en ? spk1_pin_en : 1'b0;
-		assign spk2_pin = spk_out_en ? spk2_pin_en : 1'b0;
-		assign spk_on = spk_out_en;
+		assign dbus_out  = spk_out_en ? spk_dbusout : 1'b0;
+		assign io_out_en = spk_out_en;
 	
 	
    // End of combining logic
