@@ -138,7 +138,7 @@ module openxlr8
     output logic [NUM_PINS-1:0] xb_ddoe, //   override data direction
     output logic [NUM_PINS-1:0] xb_ddov, //   data direction value if 
                                          //     overridden (1=output)
-    output logic [NUM_PINS-1:0] xb_pvoe, //   override output value
+    output logic [NUM_PINS-1:0] xb_pvoe, //    override output value
     output logic [NUM_PINS-1:0] xb_pvov, //    output value if overridden
     // Interrupts
     output logic                xb_irq //    To core
@@ -265,16 +265,16 @@ module openxlr8
 	assign xbs_ddoe[0][5] = 1'b1;
 	assign xbs_ddoe[0][6] = 1'b1;
 	
-	assign xbs_ddov[0][2] = 1'b0;
-   assign xbs_ddov[0][5] = 1'b1;
+	assign xbs_ddov[0][2] = 1'b0; //0 stands for input
+   assign xbs_ddov[0][5] = 1'b1;	//1 stands for output
 	assign xbs_ddov[0][6] = 1'b1;
 	
-   assign xbs_pvoe[0][2] = 1'b1; //changing from 0 to 1 because I have to connect pin to variable
-	assign xbs_pvoe[0][5] = 1'b1;
+   assign xbs_pvoe[0][2] = 1'b0; //changing from 0 to 1 because I have to connect pin to variable
+	assign xbs_pvoe[0][5] = 1'b1; //determines if overides output values
 	assign xbs_pvoe[0][6] = 1'b1;
 	
-   assign xbs_pvov[0][2] = spk_out_en;
-	assign xbs_pvov[0][5] = spk1_pin_en;
+   assign xbs_pvov[0][2] = 1'b0;
+	assign xbs_pvov[0][5] = spk1_pin_en; //output value if overridden
 	assign xbs_pvov[0][6] = spk2_pin_en;
 
    // End of XB instantiation
