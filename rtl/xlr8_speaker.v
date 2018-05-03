@@ -93,7 +93,7 @@ module xlr8_speaker  // NOTE: Change the module name to match your design
                       ({8{ data_sel }} & data_reg );
 
    assign io_out_en = ctrl_re ||
-                      data_re ||
+                      data_re;
 
    // End, Control Select
    //----------------------------------------------------------------------
