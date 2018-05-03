@@ -9,6 +9,7 @@ module Alorium_speaker
 	(
 	// assign inputs
 	input wire clk,		//assume clock speed is 32 Mhz; 3.125*10^-8 = 31.25ns
+    input wire resetn,  // reset when 0
 	input wire spk_on, //determines when speaker is on
 	
 	output wire spk1_pin, //speaker signal which goes into a DAC
@@ -42,7 +43,10 @@ module Alorium_speaker
 	
 	//initialize counter
 	always @(posedge clk)begin
-		if (spk_on) begin
+        if (!resetn) begin
+            spk1_temp <= 0;
+        end
+        else if (spk_on) begin
 			if (target1 == count1) begin
 				spk1_temp = ~spk1_temp;
 				count1 = 0;
@@ -75,18 +79,21 @@ module Alorium_speaker
 	
 	//initalize code for speaker 2
 		always @(posedge clk)begin
-		if (spk_on) begin
-			if (target2 == count2) begin
-				spk2_temp = ~spk2_temp;
-				count2 = 0;
-			end
-			else begin
-				count2 = count2 + 1;
-			end
-		end
+            if(!resetn) begin
+                spk2_temp <= 0;
+            end
+            else if (spk_on) begin
+			    if (target2 == count2) begin
+				    spk2_temp = ~spk2_temp;
+				    count2 = 0;
+			    end
+			    else begin
+				    count2 = count2 + 1;
+			    end
+		    end
 		
-		else begin	// if spk not on, count stays 0
-			count2 = 0;
-		end
+		    else begin	// if spk not on, count stays 0
+		    	count2 = 0;
+		    end
 	end 
 endmodule 

@@ -37,8 +37,8 @@
 //======================================================================
 // Enter your allocations here, for example:
 //
-// localparam XB_CTRL_ADDR    = 8'hE0; // Address of XB Control Reg
-// localparam XB_DATA_ADDR    = 8'hE1; // Address of XB Data Reg
+ localparam SPEAKER_CTRL_ADDR    = 8'hE0; // Address of Speaker Control Reg
+ localparam SPEAKER_DATA_ADDR    = 8'hE1; // Address of Speaker Data Reg
 
 //
 //----------------------------------------------------------------------
