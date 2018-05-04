@@ -135,7 +135,7 @@ module xlr8_speaker  // NOTE: Change the module name to match your design
                     .clk         (clk),
                     .resetn     (rstn),
                     // Inputs
-                    .spk_on      (1'b1), //(ctrl_reg[0] | data_re),
+                    .spk_on      (ctrl_reg[0] | data_re),
                     // Output
                     .spk1_pin   (data_reg[0]),
                     .spk2_pin   (data_reg[1])
