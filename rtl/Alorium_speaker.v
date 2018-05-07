@@ -77,24 +77,24 @@ module Alorium_speaker
 //		end
 //	end
 	
-	spk2_temp = 1;
+
 	//initalize code for speaker 2
-//		always @(posedge clk)begin
-//            if(!resetn) begin
-//                spk2_temp <= 0;
-//            end
-//            else if (spk_on) begin
-//			    if (target2 == count2) begin
-//				    spk2_temp = 1;// ~spk2_temp;
-//				    count2 = 0;
-//			    end
-//			    else begin
-//				    count2 = count2 + 1;
-//			    end
-//		    end
-//		
-//		    else begin	// if spk not on, count stays 0
-//		    	count2 = 0;
-//		    end
-//		end 
+		always @(posedge clk)begin
+            if(!resetn) begin
+                spk2_temp <= 0;
+            end
+            else if (spk_on) begin
+			    if (target2 == count2) begin
+				    spk2_temp = 1;// ~spk2_temp;
+				    count2 = 0;
+			    end
+			    else begin
+				    count2 = count2 + 1;
+			    end
+		    end
+		
+		    else begin	// if spk not on, count stays 0
+		    	count2 = 0;
+		    end
+		end 
 endmodule 

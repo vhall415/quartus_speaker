@@ -176,6 +176,7 @@ module openxlr8
     logic	spk1_out;
     logic   spk2_out;
     logic   spk_out_en;
+	 logic   spk_on_in;//added for input
   
    // logic [7:0]		xb1_dbusout;
    // logic 			xb1_out_en;
@@ -227,6 +228,7 @@ module openxlr8
          .clken(1'b1),
          // input
          .dbus_in(dbus_in),
+			.spk_on_in(spk_on_in),//added for input
 		 // output
          .dbus_out(spk_dbusout),
          .io_out_en(spk_out_en),
@@ -285,11 +287,11 @@ module openxlr8
     assign xbs_ddov[0][5] = 1'b1;	//1 stands for output (spk1_out)
 	assign xbs_ddov[0][6] = 1'b1;   // spk2_out
 	
-    assign xbs_pvoe[0][2] = 1'b0; //changing from 0 to 1 because I have to connect pin to variable
+    assign xbs_pvoe[0][2] = 1'b1;//1'b0; //changing from 0 to 1 because I have to connect pin to variable
 	assign xbs_pvoe[0][5] = 1'b1; //determines if overides output values
 	assign xbs_pvoe[0][6] = 1'b1;
 	
-    assign xbs_pvov[0][2] = 1'b0;
+    assign xbs_pvov[0][2] = spk_on_in; //1'b0;
 	assign xbs_pvov[0][5] = spk1_out; //output value if overridden
 	assign xbs_pvov[0][6] = spk2_out;
 
