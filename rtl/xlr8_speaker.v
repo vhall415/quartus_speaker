@@ -131,7 +131,7 @@ module xlr8_speaker  // NOTE: Change the module name to match your design
    
    assign spk1_out  = data_reg[0];
    assign spk2_out  = data_reg[1];
-	assign spk_on_in = ctrl_reg[0];//added for input
+	
    
    Alorium_speaker speak_inst (// Clock and Reset
                     .clk         (clk),
