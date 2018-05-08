@@ -284,7 +284,7 @@ module openxlr8
 	assign xbs_ddoe[0][6] = 1'b1;
 	
 	assign xbs_ddov[0][2] = 1'b0;   //0 stands for input (spk_on)
-    assign xbs_ddov[0][5] = 1'b1;	//1 stands for output (spk1_out)
+   assign xbs_ddov[0][5] = 1'b1;	//1 stands for output (spk1_out)
 	assign xbs_ddov[0][6] = 1'b1;   // spk2_out
 	
    assign xbs_pvoe[0][2] = 1'b0; //changing from 0 to 1 because I have to connect pin to variable
