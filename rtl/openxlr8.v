@@ -287,13 +287,16 @@ module openxlr8
     assign xbs_ddov[0][5] = 1'b1;	//1 stands for output (spk1_out)
 	assign xbs_ddov[0][6] = 1'b1;   // spk2_out
 	
-    assign xbs_pvoe[0][2] = 1'b1;//1'b0; //changing from 0 to 1 because I have to connect pin to variable
+   assign xbs_pvoe[0][2] = 1'b0; //changing from 0 to 1 because I have to connect pin to variable
 	assign xbs_pvoe[0][5] = 1'b1; //determines if overides output values
 	assign xbs_pvoe[0][6] = 1'b1;
 	
-    assign xbs_pvov[0][2] = spk_on_in; //1'b0;
+   assign xbs_pvov[0][2] = 1'b0;
 	assign xbs_pvov[0][5] = spk1_out; //output value if overridden
 	assign xbs_pvov[0][6] = spk2_out;
+	
+	// Store the value of pin 2 in spk_on_in
+   assign spk_on_in = xb_pinx[2];
 
    // End of XB instantiation
    //----------------------------------------------------------------------
