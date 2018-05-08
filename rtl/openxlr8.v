@@ -228,7 +228,7 @@ module openxlr8
          .clken(1'b1),
          // input
          .dbus_in(dbus_in),
-			.spk_on_in(spk_on_in),//added for input
+			.spk_on_in(xb_pinx[2]), //spk_on_in),//added for input
 		 // output
          .dbus_out(spk_dbusout),
          .io_out_en(spk_out_en),
@@ -295,8 +295,7 @@ module openxlr8
 	assign xbs_pvov[0][5] = spk1_out; //output value if overridden
 	assign xbs_pvov[0][6] = spk2_out;
 	
-	// Store the value of pin 2 in spk_on_in
-   assign spk_on_in = xb_pinx[2];
+	
 
    // End of XB instantiation
    //----------------------------------------------------------------------
