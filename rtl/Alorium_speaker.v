@@ -20,7 +20,8 @@ module Alorium_speaker
 	reg [15:0] count2 = 0;
 	//reg [15:0] target1 = 40000; //.0025s 400hz
 	reg [15:0] target2 = 20000; // .00125s 800hz
-	reg [15:0] target1 = 16000; // .0005s 1000hz
+	//	reg [15:0] target1 = 16000; // .0005s 1000hz
+	reg [15:0] target1 = 8000; // .00025s 2000hz
     
     // reg [num bits per number] name [items in array]
     //reg [11:0][0:1] freq = {12'd400, 12'd800}; // error; this verilog doesn't allow for multiple packed dimensions
